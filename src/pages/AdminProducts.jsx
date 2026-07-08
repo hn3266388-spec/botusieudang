@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { productApi } from '../api/productApi';
 import { categoryApi } from '../api/categoryApi';
+import { getImageUrl } from '../utils/helpers';
 
 export default function AdminProducts() {
   const [products, setProducts] = useState([]);
@@ -43,7 +44,7 @@ export default function AdminProducts() {
     
     try {
       const token = localStorage.getItem('accessToken');
-      const res = await fetch('http://localhost:8080/api/products/upload', {
+      const res = await fetch(`${import.meta.env.VITE_API_URL}/products/upload`, {
         method: 'POST',
         headers: { 'Authorization': `Bearer ${token}` },
         body: formData,
@@ -128,7 +129,7 @@ export default function AdminProducts() {
           </label>
           {uploading && <span style={{ fontSize: 12, color: '#888' }}>Đang tải...</span>}
           {form.imageUrl && (
-            <img src={`http://localhost:8080${form.imageUrl}`} alt="Preview" 
+            <img src={getImageUrl(form.imageUrl)} alt="Preview" 
               style={{ width: 50, height: 50, objectFit: 'cover', borderRadius: 6, border: '1px solid #ddd' }} />
           )}
         </div>
@@ -177,7 +178,7 @@ export default function AdminProducts() {
                 <td style={{ padding: 10, textAlign: 'center' }}>
                   {p.imageUrl ? (
                     <img 
-                      src={p.imageUrl.startsWith('http') ? p.imageUrl : `http://localhost:8080${p.imageUrl}`}
+                      src={getImageUrl(p.imageUrl)}
                       alt={p.name} 
                       style={{ width: 50, height: 50, objectFit: 'cover', borderRadius: 6 }}
                       onError={(e) => { e.target.style.display = 'none'; }}
