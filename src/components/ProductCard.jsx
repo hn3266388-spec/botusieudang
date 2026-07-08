@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { formatCurrency, getImageUrl } from '../utils/helpers';  // ← THÊM getImageUrl
+import { formatCurrency, getImageUrl } from '../utils/helpers';
 
 const ProductCard = ({ product, isAuthenticated, onAddToCart }) => {
   if (!product) return null;
@@ -9,7 +9,7 @@ const ProductCard = ({ product, isAuthenticated, onAddToCart }) => {
       <Link to={`/products/${product.id}`} style={{ textDecoration: 'none', color: 'inherit' }}>
         {product.imageUrl ? (
           <img 
-            src={getImageUrl(product.imageUrl)}  // ← SỬA DÒNG NÀY
+            src={getImageUrl(product.imageUrl)}
             alt={product.name} 
             style={{ width: '100%', height: 180, objectFit: 'cover' }}
           />
