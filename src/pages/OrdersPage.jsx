@@ -177,15 +177,7 @@ export default function OrdersPage() {
                 </div>
               )}
 
-              {/* Cancel button */}
-              {order.status === 'PENDING' && (
-                <button onClick={() => handleCancel(order.id)} style={{
-                  padding: '8px 20px', background: '#fff', color: '#e74c3c',
-                  border: '1px solid #e74c3c', borderRadius: 6, cursor: 'pointer', fontSize: 13,
-                }}>
-                  Hủy đơn hàng
-                </button>
-              )}
+              
 
               {isCancelled && (
                 <p style={{ color: '#e74c3c', fontSize: 13, marginTop: 8 }}>Đơn hàng này đã bị hủy.</p>
