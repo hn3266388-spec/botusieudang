@@ -1,12 +1,11 @@
 import axios from 'axios';
 
-// ✅ SỬA DÒNG NÀY
 const API = axios.create({
-  baseURL: import.meta.env.VITE_API_URL || '/api',  // ← SỬA
+  baseURL: import.meta.env.VITE_API_URL || '/api',
   timeout: 30000,
   headers: {
     'Content-Type': 'application/json',
-    'Accept': 'application/json',
+    'ngrok-skip-browser-warning': 'true'
   }
 });
 
@@ -15,6 +14,7 @@ API.interceptors.request.use((config) => {
   if (token) {
     config.headers.Authorization = `Bearer ${token}`;
   }
+  config.headers['ngrok-skip-browser-warning'] = 'true';
   return config;
 });
 
@@ -22,7 +22,6 @@ API.interceptors.response.use(
   (response) => response,
   async (error) => {
     const originalRequest = error.config;
-
     if (error.response?.status === 401 && !originalRequest._retry) {
       originalRequest._retry = true;
       const refreshToken = localStorage.getItem('refreshToken');
@@ -30,7 +29,8 @@ API.interceptors.response.use(
         try {
           const { data } = await axios.post(
             `${import.meta.env.VITE_API_URL || '/api'}/users/refresh`,
-            { refreshToken }
+            { refreshToken },
+            { headers: { 'ngrok-skip-browser-warning': 'true' } }
           );
           localStorage.setItem('accessToken', data.accessToken);
           originalRequest.headers.Authorization = `Bearer ${data.accessToken}`;
