@@ -42,7 +42,17 @@ export default function AdminDashboard() {
         sales: salesRes.data,
       });
       setOrdersByStatus(ordersStatusRes.data || {});
-      setTopProducts(topProductsRes.data || []);
+      const topData = topProductsRes.data;
+console.log('topProducts raw:', topData);
+if (Array.isArray(topData)) {
+  setTopProducts(topData);
+} else if (topData && typeof topData === 'object') {
+  // Thử lấy từ content, data, orders...
+  const arr = topData.content || topData.data || topData.orders || [];
+  setTopProducts(Array.isArray(arr) ? arr : []);
+} else {
+  setTopProducts([]);
+}
 
     } catch (error) {
       console.error('❌ Lỗi tải thống kê:', error);
