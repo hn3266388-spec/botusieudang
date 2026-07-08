@@ -1,9 +1,8 @@
 import axios from 'axios';
 
 const API = axios.create({
-  baseURL: 'https://ranch-expediter-excursion.ngrok-free.dev',
+  baseURL: '',
   timeout: 30000,
-  headers: { 'Content-Type': 'application/json' },
 });
 
 API.interceptors.request.use((config) => {
