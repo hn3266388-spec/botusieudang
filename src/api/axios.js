@@ -1,8 +1,13 @@
 import axios from 'axios';
 
+// ✅ SỬA DÒNG NÀY
 const API = axios.create({
-  baseURL: '',
+  baseURL: import.meta.env.VITE_API_URL || '/api',  // ← SỬA
   timeout: 30000,
+  headers: {
+    'Content-Type': 'application/json',
+    'Accept': 'application/json',
+  }
 });
 
 API.interceptors.request.use((config) => {
@@ -24,7 +29,7 @@ API.interceptors.response.use(
       if (refreshToken) {
         try {
           const { data } = await axios.post(
-            'https://ranch-expediter-excursion.ngrok-free.dev/api/users/refresh',
+            `${import.meta.env.VITE_API_URL || '/api'}/users/refresh`,
             { refreshToken }
           );
           localStorage.setItem('accessToken', data.accessToken);

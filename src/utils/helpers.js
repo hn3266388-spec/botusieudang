@@ -62,3 +62,12 @@ export const truncateText = (text, maxLength = 100) => {
   if (!text) return '';
   return text.length > maxLength ? text.slice(0, maxLength) + '...' : text;
 };
+// ✅ THÊM HÀM NÀY VÀO CUỐI FILE helpers.js
+export const getImageUrl = (imagePath) => {
+  if (!imagePath) return null;
+  if (imagePath.startsWith('http://') || imagePath.startsWith('https://')) {
+    return imagePath;
+  }
+  const baseUrl = import.meta.env.VITE_IMAGE_URL || '/uploads';
+  return `${baseUrl}${imagePath}`;
+};
